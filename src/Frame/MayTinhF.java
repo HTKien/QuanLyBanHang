@@ -5,9 +5,11 @@
  */
 package Frame;
 
+import LopDoiTuong.ExcelHelper;
 import LopDoiTuong.KetNoiQLBH;
 import LopDoiTuong.MayTinh;
 import com.sun.webkit.perf.WCFontPerfLogger;
+import java.io.File;
 import java.security.cert.CRLReason;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -32,10 +35,16 @@ public class MayTinhF extends javax.swing.JFrame {
      * Creates new form MayTinhF
      */
     //ArrayList<MayTinh> listMayTinhs; 
+    KetNoiQLBH ketNoiQLlBH = null;
+    Connection connection = null;
+    ArrayList<MayTinh> listMayTinhs = MayTinh.getlistMaytinh();
+
     public MayTinhF() throws ClassNotFoundException, SQLException {
+        ketNoiQLlBH = new KetNoiQLBH();
+        connection = ketNoiQLlBH.getJDBCConnect();
         initComponents();
-        //loadListMayTinh();
-        loadDataTable();
+        loadData();
+        this.setLocationRelativeTo(null);
 
     }
 
@@ -141,10 +150,20 @@ public class MayTinhF extends javax.swing.JFrame {
         });
 
         jButton6.setText("Thống kê ");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Quay lại ");
 
         jButton8.setText("Thêm 1 file ");
+        jButton8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton8ActionPerformed(evt);
+            }
+        });
 
         jButton9.setText("Xuất 1 file");
 
@@ -322,28 +341,16 @@ public class MayTinhF extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        try {
-            // TODO add your handling code here:
-            loadListMayTinh();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        loadDataTable();
+        loadData();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         try {
-            // TODO add your handling code here:
-            themMayTinhF();
-        } catch (ClassNotFoundException ex) {
+            themMayTinh();
+        } catch (SQLException ex) {
             Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            loadListMayTinh();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        loadDataTable();
+        loadData();
         JOptionPane.showMessageDialog(this, "Thêm máy tính thành công!");
     }//GEN-LAST:event_jButton2ActionPerformed
 
@@ -355,56 +362,40 @@ public class MayTinhF extends javax.swing.JFrame {
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         try {
-            // TODO add your handling code here:
-            suaMayTinhF();
-        } catch (ClassNotFoundException ex) {
+            suaMayTinh();
+        } catch (SQLException ex) {
             Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
         }
-        try {
-            loadListMayTinh();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        loadDataTable();
+        loadData();
         JOptionPane.showMessageDialog(this, "Sửa máy tính thành công!");
-
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-
-        // TODO add your handling code here:
         int chose = JOptionPane.showConfirmDialog(null, "Xác nhận", "Thêm", 0);
         if (chose == 0) {
             try {
-                xoaMayTinhF();
-            } catch (ClassNotFoundException ex) {
+                xoaMayTinh();
+            } catch (SQLException ex) {
                 Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
             }
-            try {
-                loadListMayTinh();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            loadDataTable();
+            loadData();
             JOptionPane.showMessageDialog(this, "Xóa máy tính thành công!");
-
+        }
 
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
         // TODO add your handling code here:
         if (machon.isSelected()) {
+
             try {
-                try {
-                    loadListTimKiemTheoMa();
-                } catch (SQLException ex) {
-                    Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
-                }
-                loadDataTable();
-                ;
+                loadListTimKiemTheoMa();
+            } catch (SQLException ex) {
+                Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
             } catch (ClassNotFoundException ex) {
                 Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
             }
+
         } else if (tenchon.isSelected()) {
             try {
                 loadListTimKiemTheoTen();
@@ -413,7 +404,7 @@ public class MayTinhF extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
             }
-            loadDataTable();
+
         } else if (nhasanxuatchon.isSelected()) {
             try {
                 loadListTiemKiemTheoNSX();
@@ -422,7 +413,6 @@ public class MayTinhF extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
             }
-            loadDataTable();
         } else if (namsxchon.isSelected()) {
             try {
                 loadListTimKiemTheoNamSX();
@@ -431,7 +421,6 @@ public class MayTinhF extends javax.swing.JFrame {
             } catch (SQLException ex) {
                 Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
             }
-            loadDataTable();
         }
 
 
@@ -447,9 +436,51 @@ public class MayTinhF extends javax.swing.JFrame {
         } catch (SQLException ex) {
             Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
         }
+        this.dispose();
 
 
     }//GEN-LAST:event_jButton11ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+            // TODO add your handling code here:
+            new ThongKeMayTinh().setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
+
+    private void jButton8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton8ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser jFileChooser = new JFileChooser();
+        if (jFileChooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = jFileChooser.getSelectedFile();
+            String type = file.getName().substring(file.getName().lastIndexOf(".") + 1);
+            System.out.println(type);
+
+            if (type.equals("xls") || type.equals("xlsx")) {
+                try {
+                    ArrayList<MayTinh> list = ExcelHelper.readMayTinh(file);
+                    int re = -1;
+                    for (MayTinh o : list) {
+                        re = MayTinh.add(o);
+                        if (re != 1) {
+                            break;
+                        }
+                    }
+                    if (re == 1) {
+                        loadData();
+                        JOptionPane.showMessageDialog(null, "Thêm thành công");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Thêm thất bại");
+                    }
+                } catch (Exception ex) {
+                    JOptionPane.showMessageDialog(null, "Thêm thất bại");
+                    Logger.getLogger(MayTinh.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }//GEN-LAST:event_jButton8ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -517,7 +548,7 @@ public class MayTinhF extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton machon;
-    private javax.swing.JTextField mamaytinh;
+    public static javax.swing.JTextField mamaytinh;
     private javax.swing.JTextField namsx;
     private javax.swing.JRadioButton namsxchon;
     private javax.swing.JTextField nhasanxuat;
@@ -528,30 +559,64 @@ public class MayTinhF extends javax.swing.JFrame {
     private javax.swing.JTextField timkiem;
     // End of variables declaration//GEN-END:variables
 
-    private void loadListMayTinh() throws ClassNotFoundException {
-        //String sql = "select * from maytinh";
-        try {
-            mayTinh = MayTinh.loadListMayTinhKien();
-        } catch (SQLException ex) {
-            Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
-        }
+    private void reset() {
+
+        mamaytinh.setText("");
+        tenmaytinh.setText("");
+        nhasanxuat.setText("");
+        namsx.setText("");
+        tgbh.setText("");
+    }
+
+    private void loadListTimKiemTheoMa() throws ClassNotFoundException, SQLException {
+        int input = Integer.parseInt(timkiem.getText());
+        String sql = "select * from maytinh where maMaytinh ='" + input + "'; ";
+
+        thucThiSqlTimKiem(sql);
+    }
+
+    public void loadListTimKiemTheoTen() throws ClassNotFoundException, SQLException {
+        String input = timkiem.getText().toString();
+        String sql = "select * from maytinh where tenMayTinh='" + input + "'; ";
+        thucThiSqlTimKiem(sql);
 
     }
-    ArrayList<MayTinh> mayTinh = MayTinh.loadListMayTinhKien();
 
-    private void loadDataTable() {
-        bangmaytinh.removeAll();
-        String[] columns = new String[]{"Mã", "Tên", "Nhà sản xuất", "Năm sản xuất", "Thời gian bảo hành"};
+    public void loadListTiemKiemTheoNSX() throws ClassNotFoundException, SQLException {
+        String input = timkiem.getText().toString();
+        String sql = "select * from maytinh where nhaSanXuat='" + input + "'; ";
+        thucThiSqlTimKiem(sql);
+    }
+
+    private void loadListTimKiemTheoNamSX() throws ClassNotFoundException, SQLException {
+        int input = Integer.parseInt(timkiem.getText());
+        String sql = "select * from maytinh where namSanXuat ='" + input + "'; ";
+        thucThiSqlTimKiem(sql);
+    }
+
+    private void thucThiSqlTimKiem(String sql) {
+        String[] columns = {"Mã máy tính", "Tên máy tính", "Nhà sản xuất", "Năm sản xuất", "Thời gian bảo hành"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
-        for (MayTinh maytinh : mayTinh) {
-            Vector vector = new Vector();
-            vector.add(maytinh.getMaMayTinh());
-            vector.add(maytinh.getTenMayTinh());
-            vector.add(maytinh.getNhaSanXuat());
-            vector.add(maytinh.getNamSanXuat());
-            vector.add(maytinh.getThoiGianBaoHanh());
 
-            model.addRow(vector);
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+//                JOptionPane.showMessageDialog(null, resultSet.getDouble("giaTien"));
+                Vector vector = new Vector();
+                vector.add(resultSet.getInt("maMayTinh"));
+                vector.add(resultSet.getString("tenMayTinh"));
+                vector.add(resultSet.getString("nhaSanXuat"));
+                vector.add(resultSet.getInt("namSanXuat"));
+                vector.add(resultSet.getInt("thoiGianBaoHanh"));
+
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
         }
         bangmaytinh.setModel(model);
         bangmaytinh.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
@@ -570,57 +635,113 @@ public class MayTinhF extends javax.swing.JFrame {
         });
     }
 
-    private void themMayTinhF() throws ClassNotFoundException {
-        MayTinh o = new MayTinh(Integer.parseInt(mamaytinh.getText()), tenmaytinh.getText().toString(), nhasanxuat.getText().toString(), Integer.parseInt(namsx.getText()), Integer.parseInt(tgbh.getText()));
-        LopDoiTuong.MayTinh.themMayTinh(o);
+    private void loadData() {
+        bangmaytinh.removeAll();
+        String sql = "select * from maytinh ; ";
+        String[] columns = {"Mã máy tính", "Tên máy tính", "Nhà sản xuất", "Năm sản xuất", "Thời gian bảo hành"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
 
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+//                JOptionPane.showMessageDialog(null, resultSet.getDouble("giaTien"));
+                Vector vector = new Vector();
+                vector.add(resultSet.getInt("maMayTinh"));
+                vector.add(resultSet.getString("tenMayTinh"));
+                vector.add(resultSet.getString("nhaSanXuat"));
+                vector.add(resultSet.getInt("namSanXuat"));
+                vector.add(resultSet.getInt("thoiGianBaoHanh"));
+
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+        bangmaytinh.setModel(model);
+        bangmaytinh.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+
+            @Override
+            public void valueChanged(ListSelectionEvent e) {
+                if (bangmaytinh.getSelectedRow() >= 0) {
+                    mamaytinh.setText(bangmaytinh.getValueAt(bangmaytinh.getSelectedRow(), 0).toString());
+                    tenmaytinh.setText(bangmaytinh.getValueAt(bangmaytinh.getSelectedRow(), 1).toString());
+                    nhasanxuat.setText(bangmaytinh.getValueAt(bangmaytinh.getSelectedRow(), 2).toString());
+                    namsx.setText(bangmaytinh.getValueAt(bangmaytinh.getSelectedRow(), 3).toString());
+                    tgbh.setText(bangmaytinh.getValueAt(bangmaytinh.getSelectedRow(), 4).toString());
+
+                }
+            }
+        });
     }
 
-    private void reset() {
+    private void themMayTinh() throws SQLException {
+        //doc id
+        String ma = mamaytinh.getText();
+        int maMayTinh = Integer.parseInt(ma);
 
-        mamaytinh.setText("");
-        tenmaytinh.setText("");
-        nhasanxuat.setText("");
-        namsx.setText("");
-        tgbh.setText("");
+        //doc ten 
+        String tenMayTinh = tenmaytinh.getText();
+        //
+        String nhaSanXuat = nhasanxuat.getText();
+        //
+        String nam = namsx.getText();
+        int namSanXuat = Integer.parseInt(nam);
+        //
+        String tgbaohanh = tgbh.getText();
+        int thoiGianBaoHanh = Integer.parseInt(tgbaohanh);
+
+        String sql = "insert into maytinh (maMayTinh, tenMayTinh, nhaSanXuat, namSanXuat, thoiGianBaoHanh) values ('" + maMayTinh + "','" + tenMayTinh + "', '" + nhaSanXuat + "', '" + namSanXuat + "', '" + thoiGianBaoHanh + "');";
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        statement = connection.createStatement();
+        statement.executeUpdate(sql);
     }
 
-    private void suaMayTinhF() throws ClassNotFoundException {
-        MayTinh o = new MayTinh(Integer.parseInt(mamaytinh.getText()), tenmaytinh.getText().toString(), nhasanxuat.getText().toString(), Integer.parseInt(namsx.getText()), Integer.parseInt(tgbh.getText()));
-        LopDoiTuong.MayTinh.suaMayTinh(o);
+    private void suaMayTinh() throws SQLException {
+        //doc id
+        String ma = mamaytinh.getText();
+        int maMayTinh = Integer.parseInt(ma);
+
+        //doc ten 
+        String tenMayTinh = tenmaytinh.getText();
+        //
+        String nhaSanXuat = nhasanxuat.getText();
+        //
+        String nam = namsx.getText();
+        int namSanXuat = Integer.parseInt(nam);
+        //
+        String tgbaohanh = tgbh.getText();
+        int thoiGianBaoHanh = Integer.parseInt(tgbaohanh);
+
+        String sql = "update  maytinh set   tenMayTinh='" + tenMayTinh + "', nhaSanXuat='" + nhaSanXuat + "',namSanXuat='" + namSanXuat + "',thoiGianBaoHanh='" + thoiGianBaoHanh + "'   where maMayTinh='" + maMayTinh + "';";
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        statement = connection.createStatement();
+        statement.executeUpdate(sql);
     }
 
-    private void xoaMayTinhF() throws ClassNotFoundException {
-        MayTinh o = new MayTinh(Integer.parseInt(mamaytinh.getText()), tenmaytinh.getText().toString(), nhasanxuat.getText().toString(), Integer.parseInt(namsx.getText()), Integer.parseInt(tgbh.getText()));
-        LopDoiTuong.MayTinh.xoaMayTinh(o);
+    private void xoaMayTinh() throws SQLException {
+        String ma = mamaytinh.getText();
+        int maMayTinh = Integer.parseInt(ma);
 
+        String sql = "delete from maytinh where maMayTinh = " + maMayTinh;
+        Statement statement = null;
+        ResultSet resultSet = null;
+
+        statement = connection.createStatement();
+        statement.executeUpdate(sql);
     }
 
-    private void loadListTimKiemTheoMa() throws ClassNotFoundException, SQLException {
-        int input = Integer.parseInt(timkiem.getText());
-        String sql = "select * from maytinh where maMayTinh ='" + input + "'; ";
-        mayTinh = MayTinh.getList(sql);
-
+    public static int docMaMayTinh() {
+        int a = 0;
+        a = Integer.parseInt(mamaytinh.getText());
+        return a;
     }
-
-    public void loadListTimKiemTheoTen() throws ClassNotFoundException, SQLException {
-        String input = timkiem.getText().toString();
-        String sql = "select * from maytinh where tenMayTinh='" + input + "'; ";
-        mayTinh = MayTinh.getList(sql);
-
-    }
-
-    public void loadListTiemKiemTheoNSX() throws ClassNotFoundException, SQLException {
-        String input = timkiem.getText().toString();
-        String sql = "select * from maytinh where nhaSanXuat='" + input + "'; ";
-        mayTinh = MayTinh.getList(sql);
-    }
-
-    private void loadListTimKiemTheoNamSX() throws ClassNotFoundException, SQLException {
-        int input = Integer.parseInt(timkiem.getText());
-        String sql = "select * from maytinh where namSanXuat ='" + input + "'; ";
-        mayTinh = MayTinh.getList(sql);
-
-    }
-
 }

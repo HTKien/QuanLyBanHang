@@ -1,6 +1,5 @@
 package LopDoiTuong;
 
-
 import LopDoiTuong.KetNoiQLBH;
 import static LopDoiTuong.KetNoiQLBH.getJDBCConnect;
 import java.sql.Connection;
@@ -14,18 +13,19 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author hantr
  */
 public class MayTinh {
+
     //cac thuoc tinh 
-    private int maMayTinh; 
+
+    private int maMayTinh;
     private String tenMayTinh;
-    private String nhaSanXuat; 
-    private int namSanXuat; 
-    private int thoiGianBaoHanh; 
+    private String nhaSanXuat;
+    private int namSanXuat;
+    private int thoiGianBaoHanh;
     //constructor 
 
     public MayTinh() {
@@ -79,56 +79,47 @@ public class MayTinh {
     public void setThoiGianBaoHanh(int thoiGianBaoHanh) {
         this.thoiGianBaoHanh = thoiGianBaoHanh;
     }
-    //cac ham doi voi MayTinh 
-    
-    //hàm load dữ liệu lên một array list : 
-    public static ArrayList<MayTinh> getList(String sql ) throws ClassNotFoundException, SQLException{
-        ArrayList<MayTinh> list = new ArrayList<>();
-        KetNoiQLBH ketNoiQLBH= new KetNoiQLBH(); 
-        Connection connection= ketNoiQLBH.getJDBCConnect();
-        Statement statement = connection.createStatement(); 
+
+    public static ArrayList<MayTinh> getlistMaytinh() throws ClassNotFoundException, SQLException {
+        ArrayList<MayTinh> listMayTinhs = new ArrayList<>();
+        String sql = "select * from maytinh ;";
+        KetNoiQLBH ketNoiQLBH = new KetNoiQLBH();
+        Connection connection = ketNoiQLBH.getJDBCConnect();
+        Statement statement = connection.createStatement();
         ResultSet resultSet = statement.executeQuery(sql);
-        while (resultSet.next()){
-            list.add(new MayTinh(
-            resultSet.getInt("maMayTinh"), 
-            resultSet.getString("tenMayTinh"), 
-            resultSet.getString("nhaSanXuat"),
-            resultSet.getInt("namSanXuat"),
-            resultSet.getInt("thoiGianBaoHanh")));
-            
-            
+        while (resultSet.next()) {
+            listMayTinhs.add(new MayTinh(
+                    resultSet.getInt("maMayTinh"),
+                    resultSet.getString("tenMayTinh"),
+                    resultSet.getString("nhaSanXuat"),
+                    resultSet.getInt("namSanXuat"),
+                    resultSet.getInt("thoiGianBaoHanh")
+            ));
         }
-        connection.close();
-        return list; 
+
+        return listMayTinhs;
+    }
+    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+        ArrayList<MayTinh> listMayTinhs= getlistMaytinh(); 
+        System.out.println("Tong so may tinh trong kho la: "+listMayTinhs.size());
         
     }
-    //hàm thêm máy tính : 
-    public static int themMayTinh(MayTinh o) throws ClassNotFoundException{
-        String sql = "insert into maytinh values ('"+o.getMaMayTinh()+"','" +o.getTenMayTinh()+"','"+o.getNhaSanXuat()+"','"+o.getNamSanXuat()+"','"+o.getThoiGianBaoHanh()+"') "; 
-        return interact(sql );
+    public static int add(MayTinh o) throws ClassNotFoundException {
+        String sql = "insert into  maytinh values("
+                + o.getMaMayTinh()+ ", '"
+                + o.getTenMayTinh()+ "',' "
+                + o.getNhaSanXuat()+ "', '"
+                + o.getNamSanXuat()+ "', '"
+                + o.getThoiGianBaoHanh()+ "'"
+               
+                + ");";
+        return interact(sql);
     }
-    //hàm sửa máy tính :
-    public static int suaMayTinh(MayTinh o) throws ClassNotFoundException{
-        String sql = "update maytinh set tenMayTinh='"+o.getTenMayTinh()+"',nhaSanXuat='"+o.getNhaSanXuat()+"',namSanXuat='"+o.getNamSanXuat()+"',thoiGianBaoHanh='"+o.getThoiGianBaoHanh()+"' where maMayTinh='"+o.getMaMayTinh()+"'"; 
-        return interact(sql); 
-    }
-    //hàm xóa máy tính: 
-    public static int xoaMayTinh(MayTinh o) throws ClassNotFoundException{
-        String sql ="delete from maytinh where maMayTinh = '"+o.getMaMayTinh()+"';"; 
-        return interact(sql); 
-    }
-    //hàm tìm kiếm máy tính: 
-    //ham doc ma may tinh :
-    
-    
-   
-    
-    //hàm để thực thi câu lệnh sql : 
     public static int interact(String sql) throws ClassNotFoundException {
         int result = -1;
         try {
-            KetNoiQLBH connectDatabase = new KetNoiQLBH();
-            Connection connection = connectDatabase.getJDBCConnect();
+            KetNoiQLBH ketNoiQLTV = new KetNoiQLBH();
+            Connection connection = ketNoiQLTV.getJDBCConnect();
             Statement statement = connection.createStatement();
             result = statement.executeUpdate(sql);
         } catch (SQLException e) {
@@ -136,31 +127,5 @@ public class MayTinh {
         }
         return result;
     }
-    public static ArrayList<MayTinh> loadListMayTinhKien() throws ClassNotFoundException, SQLException{
-            ArrayList<MayTinh> listMayTinhs= new ArrayList<>(); 
 
-        String sql = "select * from maytinh";
-        KetNoiQLBH ketNoiQLBH= new KetNoiQLBH(); 
-        Connection connection= ketNoiQLBH.getJDBCConnect();
-        Statement statement = connection.createStatement(); 
-        ResultSet resultSet = statement.executeQuery(sql);
-        while (resultSet.next()){
-            listMayTinhs.add(new MayTinh(
-            resultSet.getInt("maMayTinh"), 
-            resultSet.getString("tenMayTinh"), 
-            resultSet.getString("nhaSanXuat"),
-            resultSet.getInt("namSanXuat"),
-            resultSet.getInt("thoiGianBaoHanh")));
-            
-            
-        }
-        connection.close();
-        
-        return listMayTinhs; 
-        
-    }
-    
-    
-    
-    
 }

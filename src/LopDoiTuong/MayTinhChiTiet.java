@@ -109,8 +109,9 @@ public class MayTinhChiTiet {
     //cac ham doi voi MayTinhChiTiet: 
 
     //hàm load dữ liệu lên một array list : 
-    public static ArrayList<MayTinhChiTiet> getList(String sql) throws ClassNotFoundException, SQLException {
+    public static ArrayList<MayTinhChiTiet> getList() throws ClassNotFoundException, SQLException {
         ArrayList<MayTinhChiTiet> list = new ArrayList<>();
+        String sql = "select * from maytinhchitiet ;";
         KetNoiQLBH ketNoiQLBH = new KetNoiQLBH();
         Connection connection = ketNoiQLBH.getJDBCConnect();
         Statement statement = connection.createStatement();
@@ -131,7 +132,32 @@ public class MayTinhChiTiet {
         return list;
 
     }
-    //ham them may tinh :
-    
+
+    public static int add(MayTinhChiTiet o) throws ClassNotFoundException {
+        String sql = "insert into  maytinhchitiet values("
+                + o.getMaMayTinhChiTiet() + ", '"
+                + o.getMaMayTinh() + "',' "
+                + o.getMoTa() + "', '"
+                + o.getGiaNhap() + "', '"
+                + o.getGiaBan() + "', '"
+                + o.getCauHinh() + "', '"
+                + o.getMauSac() + "', '"
+                + o.getSoLuongTonKho()+ "'"
+                + ");";
+        return interact(sql);
+    }
+
+    public static int interact(String sql) throws ClassNotFoundException {
+        int result = -1;
+        try {
+            KetNoiQLBH ketNoiQLTV = new KetNoiQLBH();
+            Connection connection = ketNoiQLTV.getJDBCConnect();
+            Statement statement = connection.createStatement();
+            result = statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return result;
+    }
 
 }
