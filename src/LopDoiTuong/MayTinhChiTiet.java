@@ -142,7 +142,7 @@ public class MayTinhChiTiet {
                 + o.getGiaBan() + "', '"
                 + o.getCauHinh() + "', '"
                 + o.getMauSac() + "', '"
-                + o.getSoLuongTonKho()+ "'"
+                + o.getSoLuongTonKho() + "'"
                 + ");";
         return interact(sql);
     }

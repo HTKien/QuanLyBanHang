@@ -44,7 +44,7 @@ public class MayTinhChiTietF extends javax.swing.JFrame {
         ketNoiQLlBH = new KetNoiQLBH();
         connection = ketNoiQLlBH.getJDBCConnect();
         initComponents();
-                this.setLocationRelativeTo(null);
+        this.setLocationRelativeTo(null);
 
         comboboxMaMayTinhChiTiet();
         comboboxGiaBan();
@@ -675,22 +675,22 @@ public class MayTinhChiTietF extends javax.swing.JFrame {
     }
 
     private void timKiemTheoMaMayTinhChiTiet() {
-        String sql = "select * from maytinhchitiet where maMayTinhChiTiet ="+mamaytinhchitietI.getSelectedItem(); 
+        String sql = "select * from maytinhchitiet where maMayTinhChiTiet =" + mamaytinhchitietI.getSelectedItem();
         thucThiSqlTimKiem(sql);
     }
 
     private void timKiemTheoGiaNhap() {
-        String sql = "select * from maytinhchitiet where giaNhap ="+gianhapcbb.getSelectedItem(); 
+        String sql = "select * from maytinhchitiet where giaNhap =" + gianhapcbb.getSelectedItem()+"and maMayTinh="+MayTinhF.docMaMayTinh()+";";
         thucThiSqlTimKiem(sql);
     }
 
     private void timKiemTheoGiaBan() {
-        String sql = "select * from maytinhchitiet where giaBan ="+giabancbb.getSelectedItem(); 
+        String sql = "select * from maytinhchitiet where giaBan =" + giabancbb.getSelectedItem()+"and maMayTinh="+MayTinhF.docMaMayTinh()+";";
         thucThiSqlTimKiem(sql);
     }
 
     private void timKiemTheoMauSac() {
-        String sql = "select * from maytinhchitiet where mauSac ="+maucbb.getSelectedItem(); 
+        String sql = "select * from maytinhchitiet where mauSac ='" + maucbb.getSelectedItem()+"' and maMayTinh="+MayTinhF.docMaMayTinh()+";";
         thucThiSqlTimKiem(sql);
     }
 
@@ -751,23 +751,21 @@ public class MayTinhChiTietF extends javax.swing.JFrame {
         String moTa = motatt.getText();
         //
         String gianhap = gianhaptt.getText();
-        Double giaNhap =Double.parseDouble(gianhap); 
+        Double giaNhap = Double.parseDouble(gianhap);
         //
         String giaban = giabantt.getText();
-        Double giaBan =Double.parseDouble(giaban); 
+        Double giaBan = Double.parseDouble(giaban);
         //
         String cauHinh = cauhinhtt.getText();
         //
         String mauSac = mausactt.getText();
-        int maMayTinh = MayTinhF.docMaMayTinh(); 
-        
-        
-        
+        int maMayTinh = MayTinhF.docMaMayTinh();
+
         //
         String soluongtonkho = tonkhott.getText();
         int soLuongTonKho = Integer.parseInt(soluongtonkho);
 
-        String sql = "insert into maytinhchitiet (maMayTinhChiTiet, maMayTinh,moTa, giaNhap, giaBan, cauHinh,mauSac , soLuongTonKho ) values ('" + maMayTinhChiTiet + "','" + maMayTinh + "', '" + moTa + "', '" + giaNhap + "', '"+ giaBan + "', '"+ cauHinh + "', '"+ mauSac + "', '" + soLuongTonKho + "');";
+        String sql = "insert into maytinhchitiet (maMayTinhChiTiet, maMayTinh,moTa, giaNhap, giaBan, cauHinh,mauSac , soLuongTonKho ) values ('" + maMayTinhChiTiet + "','" + maMayTinh + "', '" + moTa + "', '" + giaNhap + "', '" + giaBan + "', '" + cauHinh + "', '" + mauSac + "', '" + soLuongTonKho + "');";
         Statement statement = null;
         ResultSet resultSet = null;
 
@@ -784,23 +782,21 @@ public class MayTinhChiTietF extends javax.swing.JFrame {
         String moTa = motatt.getText();
         //
         String gianhap = gianhaptt.getText();
-        Double giaNhap =Double.parseDouble(gianhap); 
+        Double giaNhap = Double.parseDouble(gianhap);
         //
         String giaban = giabantt.getText();
-        Double giaBan =Double.parseDouble(giaban); 
+        Double giaBan = Double.parseDouble(giaban);
         //
         String cauHinh = cauhinhtt.getText();
         //
         String mauSac = mausactt.getText();
-        int maMayTinh = MayTinhF.docMaMayTinh(); 
-        
-        
-        
+        int maMayTinh = MayTinhF.docMaMayTinh();
+
         //
         String soluongtonkho = tonkhott.getText();
         int soLuongTonKho = Integer.parseInt(soluongtonkho);
 
-        String sql = "update  maytinhchitiet set   moTa='" + moTa + "', giaNhap='" + giaNhap + "',giaBan='" + giaBan +"',cauHinh='" + cauHinh +"',mauSac='" + mauSac + "',soLuongTonKho='" + soLuongTonKho + "'   where maMayTinhChiTiet='" + maMayTinhChiTiet + "';";
+        String sql = "update  maytinhchitiet set   moTa='" + moTa + "', giaNhap='" + giaNhap + "',giaBan='" + giaBan + "',cauHinh='" + cauHinh + "',mauSac='" + mauSac + "',soLuongTonKho='" + soLuongTonKho + "'   where maMayTinhChiTiet='" + maMayTinhChiTiet + "';";
 
         Statement statement = null;
         ResultSet resultSet = null;

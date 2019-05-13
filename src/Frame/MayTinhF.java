@@ -8,8 +8,10 @@ package Frame;
 import LopDoiTuong.ExcelHelper;
 import LopDoiTuong.KetNoiQLBH;
 import LopDoiTuong.MayTinh;
+import LopDoiTuong.WordHelper;
 import com.sun.webkit.perf.WCFontPerfLogger;
 import java.io.File;
+import java.io.IOException;
 import java.security.cert.CRLReason;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -166,6 +168,11 @@ public class MayTinhF extends javax.swing.JFrame {
         });
 
         jButton9.setText("Xuất 1 file");
+        jButton9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton9ActionPerformed(evt);
+            }
+        });
 
         jLabel6.setText("Tìm kiếm ");
 
@@ -423,7 +430,6 @@ public class MayTinhF extends javax.swing.JFrame {
             }
         }
 
-
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton11ActionPerformed
@@ -437,7 +443,6 @@ public class MayTinhF extends javax.swing.JFrame {
             Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
         }
         this.dispose();
-
 
     }//GEN-LAST:event_jButton11ActionPerformed
 
@@ -481,6 +486,24 @@ public class MayTinhF extends javax.swing.JFrame {
             }
         }
     }//GEN-LAST:event_jButton8ActionPerformed
+
+    private void jButton9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton9ActionPerformed
+        // TODO add your handling code here:
+        JFileChooser jFileChooser = new JFileChooser();
+        if (jFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = jFileChooser.getSelectedFile();
+
+            try {
+                WordHelper.writeMayTinh(file, listMayTinhs, "THÔNG TIN MÁY TÍNH");
+                JOptionPane.showMessageDialog(null, "Xuất file thành công");
+
+            } catch (IOException ex) {
+                Logger.getLogger(MayTinhF.class.getName()).log(Level.SEVERE, null, ex);
+                JOptionPane.showMessageDialog(this, "Xuất file thất bại!");
+            }
+
+        }
+    }//GEN-LAST:event_jButton9ActionPerformed
 
     /**
      * @param args the command line arguments

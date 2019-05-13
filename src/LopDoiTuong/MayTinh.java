@@ -20,7 +20,6 @@ import java.util.ArrayList;
 public class MayTinh {
 
     //cac thuoc tinh 
-
     private int maMayTinh;
     private String tenMayTinh;
     private String nhaSanXuat;
@@ -99,22 +98,24 @@ public class MayTinh {
 
         return listMayTinhs;
     }
+
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        ArrayList<MayTinh> listMayTinhs= getlistMaytinh(); 
-        System.out.println("Tong so may tinh trong kho la: "+listMayTinhs.size());
-        
+        ArrayList<MayTinh> listMayTinhs = getlistMaytinh();
+        System.out.println("Tong so may tinh trong kho la: " + listMayTinhs.size());
+
     }
+
     public static int add(MayTinh o) throws ClassNotFoundException {
         String sql = "insert into  maytinh values("
-                + o.getMaMayTinh()+ ", '"
-                + o.getTenMayTinh()+ "',' "
-                + o.getNhaSanXuat()+ "', '"
-                + o.getNamSanXuat()+ "', '"
-                + o.getThoiGianBaoHanh()+ "'"
-               
+                + o.getMaMayTinh() + ", '"
+                + o.getTenMayTinh() + "',' "
+                + o.getNhaSanXuat() + "', '"
+                + o.getNamSanXuat() + "', '"
+                + o.getThoiGianBaoHanh() + "'"
                 + ");";
         return interact(sql);
     }
+
     public static int interact(String sql) throws ClassNotFoundException {
         int result = -1;
         try {

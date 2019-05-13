@@ -6,12 +6,19 @@
 package Frame;
 
 import LopDoiTuong.KetNoiQLBH;
+import LopDoiTuong.ThongKeMayTinhType;
+import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -22,12 +29,16 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
 
     /**
      * Creates new form ThongKeMayTinh
-     */KetNoiQLBH ketNoiQLlBH = null;
+     */
+    KetNoiQLBH ketNoiQLlBH = null;
     Connection connection = null;
+    ArrayList<ThongKeMayTinhType> listThongKe = new ArrayList<>();
+    
     public ThongKeMayTinh() throws ClassNotFoundException {
         ketNoiQLlBH = new KetNoiQLBH();
         connection = ketNoiQLlBH.getJDBCConnect();
         initComponents();
+        this.setLocationRelativeTo(null);
     }
 
     /**
@@ -39,23 +50,28 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
+        tenchon = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         bangthongke = new javax.swing.JTable();
-        jRadioButton2 = new javax.swing.JRadioButton();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
-        jRadioButton5 = new javax.swing.JRadioButton();
+        nhasxchon = new javax.swing.JRadioButton();
+        mausacchon = new javax.swing.JRadioButton();
+        gianhapchon = new javax.swing.JRadioButton();
+        giabanchon = new javax.swing.JRadioButton();
+        namsxchon = new javax.swing.JRadioButton();
+        thoigianbhchon = new javax.swing.JRadioButton();
+        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jLabel1.setText("Thống kê máy tính");
 
-        jRadioButton1.setText("Tên ");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(tenchon);
+        tenchon.setText("Tên ");
+        tenchon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                tenchonActionPerformed(evt);
             }
         });
 
@@ -72,26 +88,58 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(bangthongke);
 
-        jRadioButton2.setText("Nhà sản xuất ");
-
-        jRadioButton3.setText("Màu sắc ");
-        jRadioButton3.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(nhasxchon);
+        nhasxchon.setText("Nhà sản xuất ");
+        nhasxchon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton3ActionPerformed(evt);
+                nhasxchonActionPerformed(evt);
             }
         });
 
-        jRadioButton4.setText("Giá nhập ");
-        jRadioButton4.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(mausacchon);
+        mausacchon.setText("Màu sắc ");
+        mausacchon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton4ActionPerformed(evt);
+                mausacchonActionPerformed(evt);
             }
         });
 
-        jRadioButton5.setText("Giá bán ");
-        jRadioButton5.addActionListener(new java.awt.event.ActionListener() {
+        buttonGroup1.add(gianhapchon);
+        gianhapchon.setText("Giá nhập ");
+        gianhapchon.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton5ActionPerformed(evt);
+                gianhapchonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(giabanchon);
+        giabanchon.setText("Giá bán ");
+        giabanchon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                giabanchonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(namsxchon);
+        namsxchon.setText("Năm sản xuất");
+        namsxchon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                namsxchonActionPerformed(evt);
+            }
+        });
+
+        buttonGroup1.add(thoigianbhchon);
+        thoigianbhchon.setText("Thời gian bảo hành");
+        thoigianbhchon.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                thoigianbhchonActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Xuất file ");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -106,19 +154,27 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 452, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(14, 14, 14)
-                        .addComponent(jRadioButton1)
-                        .addGap(26, 26, 26)
-                        .addComponent(jRadioButton2)
-                        .addGap(61, 61, 61)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tenchon)
+                            .addComponent(mausacchon))
+                        .addGap(45, 45, 45)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(namsxchon)
+                            .addComponent(nhasxchon))
+                        .addGap(22, 22, 22)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(10, 10, 10)
-                                .addComponent(jRadioButton3)
-                                .addGap(27, 27, 27)
-                                .addComponent(jRadioButton4)
-                                .addGap(28, 28, 28)
-                                .addComponent(jRadioButton5))
-                            .addComponent(jLabel1))))
+                                .addGap(104, 104, 104)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(thoigianbhchon)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(gianhapchon)
+                                        .addGap(28, 28, 28)
+                                        .addComponent(giabanchon))))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(236, 236, 236)
+                        .addComponent(jButton1)))
                 .addContainerGap(69, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -128,26 +184,31 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jRadioButton1)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton3)
-                    .addComponent(jRadioButton4)
-                    .addComponent(jRadioButton5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 147, Short.MAX_VALUE)
+                    .addComponent(tenchon)
+                    .addComponent(nhasxchon)
+                    .addComponent(gianhapchon)
+                    .addComponent(giabanchon))
+                .addGap(35, 35, 35)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(mausacchon)
+                    .addComponent(namsxchon)
+                    .addComponent(thoigianbhchon))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 89, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addGap(59, 59, 59)
+                .addComponent(jButton1))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void tenchonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tenchonActionPerformed
         // TODO add your handling code here:
-        thongKeTheoTen(); 
-        
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+        thongKeTheoTen();
 
-    private void jRadioButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton3ActionPerformed
+    }//GEN-LAST:event_tenchonActionPerformed
+
+    private void mausacchonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mausacchonActionPerformed
         // TODO add your handling code here:
         bangthongke.removeAll();
         String[] columns = {"Màu sắc ", "Số lượng máy tính"};
@@ -155,7 +216,7 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
         String sql = "SELECT Sum(soLuongTonKho), mauSac FROM maytinhchitiet group by mauSac order by Sum(soLuongTonKho) DESC ;";
         Statement statement = null;
         ResultSet resultSet = null;
-
+        
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -163,16 +224,16 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
                 Vector vector = new Vector();
                 vector.add(resultSet.getString("mauSac"));
                 vector.add(resultSet.getInt("Sum(soLuongTonKho)"));
-
+                
                 model.addRow(vector);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         bangthongke.setModel(model);
-    }//GEN-LAST:event_jRadioButton3ActionPerformed
+    }//GEN-LAST:event_mausacchonActionPerformed
 
-    private void jRadioButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton4ActionPerformed
+    private void gianhapchonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_gianhapchonActionPerformed
         // TODO add your handling code here:
         bangthongke.removeAll();
         String[] columns = {"Giá nhập ", "Số lượng máy tính"};
@@ -180,7 +241,7 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
         String sql = "SELECT Sum(soLuongTonKho), giaNhap FROM maytinhchitiet group by giaNhap order by Sum(soLuongTonKho) DESC ;";
         Statement statement = null;
         ResultSet resultSet = null;
-
+        
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -188,16 +249,16 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
                 Vector vector = new Vector();
                 vector.add(resultSet.getString("giaNhap"));
                 vector.add(resultSet.getInt("Sum(soLuongTonKho)"));
-
+                
                 model.addRow(vector);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         bangthongke.setModel(model);
-    }//GEN-LAST:event_jRadioButton4ActionPerformed
+    }//GEN-LAST:event_gianhapchonActionPerformed
 
-    private void jRadioButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton5ActionPerformed
+    private void giabanchonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_giabanchonActionPerformed
         // TODO add your handling code here:
         bangthongke.removeAll();
         String[] columns = {"Giá bán ", "Số lượng máy tính"};
@@ -205,7 +266,7 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
         String sql = "SELECT Sum(soLuongTonKho), giaBan FROM maytinhchitiet group by giaBan order by Sum(soLuongTonKho) DESC ;";
         Statement statement = null;
         ResultSet resultSet = null;
-
+        
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
@@ -213,14 +274,256 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
                 Vector vector = new Vector();
                 vector.add(resultSet.getString("giaBan"));
                 vector.add(resultSet.getInt("Sum(soLuongTonKho)"));
-
+                
                 model.addRow(vector);
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         bangthongke.setModel(model);
-    }//GEN-LAST:event_jRadioButton5ActionPerformed
+    }//GEN-LAST:event_giabanchonActionPerformed
+
+    private void nhasxchonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nhasxchonActionPerformed
+        // TODO add your handling code here:
+        bangthongke.removeAll();
+        String[] columns = {"Nhà sản xuất ", "Số lượng máy tính"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        String sql = "SELECT  maytinh.nhaSanXuat, sum(maytinhchitiet.soLuongTonKho) FROM maytinh INNER JOIN maytinhchitiet ON maytinh.maMayTinh=maytinhchitiet.maMayTinh group by nhaSanXuat;";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Vector vector = new Vector();
+                vector.add(resultSet.getString("nhaSanXuat"));
+                vector.add(resultSet.getInt("sum(maytinhchitiet.soLuongTonKho)"));
+                
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        bangthongke.setModel(model);
+    }//GEN-LAST:event_nhasxchonActionPerformed
+
+    private void namsxchonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_namsxchonActionPerformed
+        // TODO add your handling code here:
+         bangthongke.removeAll();
+        String[] columns = {"Nhà sản xuất ", "Số lượng máy tính"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        String sql = "SELECT  maytinh.namSanXuat, sum(maytinhchitiet.soLuongTonKho) FROM maytinh INNER JOIN maytinhchitiet ON maytinh.maMayTinh=maytinhchitiet.maMayTinh group by namSanXuat;";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Vector vector = new Vector();
+                vector.add(resultSet.getString("namSanXuat"));
+                vector.add(resultSet.getInt("sum(maytinhchitiet.soLuongTonKho)"));
+                
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        bangthongke.setModel(model);
+    }//GEN-LAST:event_namsxchonActionPerformed
+
+    private void thoigianbhchonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_thoigianbhchonActionPerformed
+        // TODO add your handling code here:
+         bangthongke.removeAll();
+        String[] columns = {"Số tháng bảo hành ", "Số lượng máy tính"};
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        String sql = "SELECT  maytinh.thoiGianBaoHanh, sum(maytinhchitiet.soLuongTonKho) FROM maytinh INNER JOIN maytinhchitiet ON maytinh.maMayTinh=maytinhchitiet.maMayTinh group by thoiGianBaoHanh;";
+        Statement statement = null;
+        ResultSet resultSet = null;
+        
+        try {
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                Vector vector = new Vector();
+                vector.add(resultSet.getString("thoiGianBaoHanh"));
+                vector.add(resultSet.getInt("sum(maytinhchitiet.soLuongTonKho)"));
+                
+                model.addRow(vector);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        bangthongke.setModel(model);
+    }//GEN-LAST:event_thoigianbhchonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        if(tenchon.isSelected()){
+            try { 
+                listThongKe = ThongKeMayTinhType.getList("tenMayTinh");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JFileChooser jFileChooser = new JFileChooser();
+            if (jFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+
+                try {
+                    LopDoiTuong.WordHelper.writeMayTinhTheoTen(file, listThongKe, "THỐNG KẾ MÁY TÍNH THEO TÊN");
+                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Xuất file thất bại!");
+                }
+
+            }
+        }else if(nhasxchon.isSelected()){
+            try { 
+                listThongKe = ThongKeMayTinhType.getList("nhaSanXuat");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JFileChooser jFileChooser = new JFileChooser();
+            if (jFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+
+                try {
+                    LopDoiTuong.WordHelper.writeMayTinhTheoNhaSanXuat(file, listThongKe, "THỐNG KẾ MÁY TÍNH THEO NHÀ SẢN XUẤT");
+                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Xuất file thất bại!");
+                }
+
+            }
+        
+        }else if(namsxchon.isSelected()){
+            try { 
+                listThongKe = ThongKeMayTinhType.getList("namSanXuat");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JFileChooser jFileChooser = new JFileChooser();
+            if (jFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+
+                try {
+                    LopDoiTuong.WordHelper.writeMayTinhTheoNamSanXuat(file, listThongKe, "THỐNG KẾ MÁY TÍNH THEO NĂM SẢN XUẤT");
+                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Xuất file thất bại!");
+                }
+
+            }
+        }else if(thoigianbhchon.isSelected()){
+            try { 
+                listThongKe = ThongKeMayTinhType.getList("thoiGianBaoHanh");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JFileChooser jFileChooser = new JFileChooser();
+            if (jFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+
+                try {
+                    LopDoiTuong.WordHelper.writeMayTinhTheoThoiGianBaoHanh(file, listThongKe, "THỐNG KẾ MÁY TÍNH THEO THỜI GIAN BẢO HÀNH");
+                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Xuất file thất bại!");
+                }
+
+            }
+        }else if(gianhapchon.isSelected()){
+            try { 
+                listThongKe = ThongKeMayTinhType.getList2("giaNhap");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JFileChooser jFileChooser = new JFileChooser();
+            if (jFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+
+                try {
+                    LopDoiTuong.WordHelper.writeMayTinhTheoGiaNhap(file, listThongKe, "THỐNG KẾ MÁY TÍNH THEO GIÁ NHẬP");
+                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Xuất file thất bại!");
+                }
+
+            }
+        }else if(giabanchon.isSelected()){
+            try { 
+                listThongKe = ThongKeMayTinhType.getList("giaBan");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JFileChooser jFileChooser = new JFileChooser();
+            if (jFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+
+                try {
+                    LopDoiTuong.WordHelper.writeMayTinhTheoGiaBan(file, listThongKe, "THỐNG KẾ MÁY TÍNH THEO GIÁ BÁN");
+                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Xuất file thất bại!");
+                }
+
+            }
+        }else if(mausacchon.isSelected()){
+            try { 
+                listThongKe = ThongKeMayTinhType.getList("mauSac");
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JFileChooser jFileChooser = new JFileChooser();
+            if (jFileChooser.showSaveDialog(this) == JFileChooser.APPROVE_OPTION) {
+                File file = jFileChooser.getSelectedFile();
+
+                try {
+                    LopDoiTuong.WordHelper.writeMayTinhTheoMauSac(file, listThongKe, "THỐNG KẾ MÁY TÍNH THEO MÀU SẮC");
+                    JOptionPane.showMessageDialog(null, "Xuất file thành công");
+
+                } catch (IOException ex) {
+                    Logger.getLogger(ThongKeMayTinh.class.getName()).log(Level.SEVERE, null, ex);
+                    JOptionPane.showMessageDialog(this, "Xuất file thất bại!");
+                }
+
+            }
+        }
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -263,31 +566,35 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable bangthongke;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JRadioButton giabanchon;
+    private javax.swing.JRadioButton gianhapchon;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
-    private javax.swing.JRadioButton jRadioButton3;
-    private javax.swing.JRadioButton jRadioButton4;
-    private javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JRadioButton mausacchon;
+    private javax.swing.JRadioButton namsxchon;
+    private javax.swing.JRadioButton nhasxchon;
+    private javax.swing.JRadioButton tenchon;
+    private javax.swing.JRadioButton thoigianbhchon;
     // End of variables declaration//GEN-END:variables
 
     private void thongKeTheoTen() {
         bangthongke.removeAll();
         String[] columns = {"Tên máy tính", "Số lượng máy tính"};
         DefaultTableModel model = new DefaultTableModel(columns, 0);
-        String sql = "SELECT maMayTinh, tenMayTinh FROM maytinh ;";
+        String sql = "SELECT  tenMayTinh, sum(maytinhchitiet.soLuongTonKho) FROM maytinh INNER JOIN maytinhchitiet ON maytinh.maMayTinh=maytinhchitiet.maMayTinh group by tenMayTinh;";
         Statement statement = null;
         ResultSet resultSet = null;
-
+        
         try {
             statement = connection.createStatement();
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 Vector vector = new Vector();
                 vector.add(resultSet.getString("tenMayTinh"));
-                vector.add(getSoLuongMayTinh(resultSet.getInt("maMayTinh")));
-
+                vector.add(resultSet.getInt("sum(maytinhchitiet.soLuongTonKho)"));
+                
                 model.addRow(vector);
             }
         } catch (Exception e) {
@@ -295,26 +602,6 @@ public class ThongKeMayTinh extends javax.swing.JFrame {
         }
         bangthongke.setModel(model);
     }
-
-    private int  getSoLuongMayTinh(int maMayTinh) {
-        int soLuong=0; 
-        
-        String sql = "SELECT SUM(soLuongTonKho) FROM maytinhchitiet where maMayTinh='"+maMayTinh+"';";
-        
-        Statement statement = null;
-        ResultSet resultSet = null;
-        try {
-            statement = connection.createStatement();
-            resultSet = statement.executeQuery(sql);
-            while (resultSet.next()) {
-                soLuong = resultSet.getInt("SUM(soLuongTonKho)");
-
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-
-        }
-
-        return soLuong;
-    }
+    
+   
 }

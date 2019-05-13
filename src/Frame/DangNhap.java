@@ -6,7 +6,6 @@
 package Frame;
 
 import LopDoiTuong.KetNoiQLBH;
-import java.awt.Menu;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,13 +24,15 @@ public class DangNhap extends javax.swing.JFrame {
     /**
      * Creates new form DangNhap
      */
-    KetNoiQLBH ketNoiQLBH = null;
+    KetNoiQLBH ketNoiQLlBH = null;
     Connection connection = null;
 
-    public DangNhap() throws ClassNotFoundException {
-        ketNoiQLBH = new KetNoiQLBH();
-        connection = ketNoiQLBH.getJDBCConnect();
+    public DangNhap() {
+        ketNoiQLlBH = new KetNoiQLBH();
+        connection = ketNoiQLlBH.getJDBCConnect();
         initComponents();
+        this.setLocationRelativeTo(null);
+
     }
 
     /**
@@ -43,7 +44,8 @@ public class DangNhap extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jMonthChooser1 = new com.toedter.calendar.JMonthChooser();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
@@ -65,10 +67,30 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         passdk = new javax.swing.JPasswordField();
         passdklai = new javax.swing.JPasswordField();
-        jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("THƯ VIỆN TẠ QUANG BỬU - ĐẠI HỌC BÁCH KHOA HÀ NỘI ");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap())
+        );
 
         jPanel3.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -96,7 +118,7 @@ public class DangNhap extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jLabel4.setText("Username:");
+        jLabel4.setText("Username: ");
 
         jLabel5.setText("Mật khẩu: ");
 
@@ -257,7 +279,7 @@ public class DangNhap extends javax.swing.JFrame {
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(70, 70, 70)
                 .addComponent(dangki, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -269,40 +291,23 @@ public class DangNhap extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel1.setText("HỆ THỐNG QUẢN LÝ BÁN MÁY VI TÍNH");
-
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(185, 185, 185))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
@@ -333,6 +338,7 @@ public class DangNhap extends javax.swing.JFrame {
 
             if (rs.next() && !emaildn.getText().equals("") && !passworddn.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Đăng nhập thành công!");
+
             } else {
                 JOptionPane.showMessageDialog(this, "Sai Username hoặc mật khẩu!\nĐăng nhập thất bại!");
 
@@ -345,14 +351,13 @@ public class DangNhap extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
-
         String a = emaildk.getText();
         String b = passdk.getText();
         String c = passdklai.getText();
-        if(a.equals("")||b.equals("")||c.equals("")){
+        if (a.equals("") || b.equals("") || c.equals("")) {
             JOptionPane.showMessageDialog(this, "Bạn chưa nhập đầy đủ thông tin đăng kí!");
         }
-        if (b.equals(c)&&!b.equals("")) {
+        if (b.equals(c) && !b.equals("")) {
             String sql = "insert into  user(userName, password ) values ('" + a + "','" + b + "')";
             Statement statement = null;
             ResultSet resultSet = null;
@@ -369,10 +374,9 @@ public class DangNhap extends javax.swing.JFrame {
             passdk.setText("");
             passdklai.setText("");
 
-        } else if(!b.equals(c)) {
+        } else if (!b.equals(c)) {
             JOptionPane.showMessageDialog(this, "Bạn nhập mật khẩu xác minh chưa đúng!");
         }
-
     }//GEN-LAST:event_jButton7ActionPerformed
 
     /**
@@ -405,11 +409,7 @@ public class DangNhap extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new DangNhap().setVisible(true);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(DangNhap.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new DangNhap().setVisible(true);
             }
         });
     }
@@ -429,7 +429,6 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private com.toedter.calendar.JMonthChooser jMonthChooser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
